@@ -17,79 +17,11 @@ namespace SysSoft2
             InitializeComponent();
         }
 
-        private Tuple<string, short>[] registers = new Tuple<string, short>[8];
-
-        private short[] mov(string dst, string src, Tuple<string, short>[] mas)
+        private int findIdentidier(List<Tuple<string, short>> mas, string name)
         {
-            short[] outp = new short[2];
-            short tmp = -1;
-            for (short i = 0; i < mas.Length; i++)
+            for (int i = 0; i < mas.Count; i ++)
             {
-                if (dst.Equals(mas[i].Item1))
-                {
-                    tmp = i;
-                    outp[0] = tmp;
-                }
-            }
-            try
-            {
-                outp[1] = Convert.ToInt16(src);
-                return outp;
-            }
-            catch
-            {
-                for (short i = 0; i < mas.Length; i++)
-                {
-                    if (src.Equals(mas[i].Item1))
-                    {
-                        outp[1] = i;
-                        return outp;
-                    }
-                }
-                outp[1] = -1;
-                return outp;
-            }
-            
-        }
-
-        private short push(string src, Tuple<string, short>[] mas)
-        {
-            try
-            {
-                return Convert.ToInt16(src);
-            }
-            catch
-            {
-                for (short i = 0; i < mas.Length; i++)
-                {
-                    if (src.Equals(mas[i].Item1))
-                    {
-                        return i;
-                    }
-                }
-                return -1;
-            }
-        }
-
-        private short pop(string dst, Tuple<string, short>[] mas)
-        {
-            
-            for (short i = 0; i < mas.Length; i++)
-            {
-                if (dst.Equals(mas[i].Item1))
-                {
-                    return i;
-                }
-            }
-                return -1;
-            
-        }
-
-        private short inc(string dst, Tuple<string, short>[] mas)
-        {
-            for (short i = 0; i < mas.Length; i ++)
-            {
-                if (dst.Equals(mas[i].Item1))
+                if (mas[i].Item1.Equals(name))
                 {
                     return i;
                 }
@@ -97,6 +29,7 @@ namespace SysSoft2
             return -1;
         }
 
+        private Tuple<string, short>[] registers = new Tuple<string, short>[8];
 
         private void magic_Click(object sender, EventArgs e)
         {
@@ -109,6 +42,27 @@ namespace SysSoft2
             registers[6] = new Tuple<string, short>("edh", 0);
             registers[7] = new Tuple<string, short>("edl", 0);
 
+            string input = tbInput.Text;
+            List<string> prog = new List<string>();
+            string tmp = "";
+
+            for (int i = 0; i < input.Length; i ++)
+            {
+                if (input[i].Equals('\n'))
+                {
+                    prog.Add(tmp);
+                    tmp = "";
+                }
+                else
+                {
+                    tmp += input[i];
+                }
+            }
+
+            for (int i = 0; i < prog.Count; i ++)
+            {
+
+            }
 
         }
     }
